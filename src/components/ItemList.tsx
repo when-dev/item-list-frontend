@@ -3,6 +3,7 @@ import { useItemsStore } from '../store/useItemsStore'
 import Item from './Item'
 import Loader from './Loader'
 import { AnimatePresence } from 'framer-motion'
+import { resetOrder } from '../utils/fetchItems'
 
 const ItemList = () => {
 	const {
@@ -68,23 +69,37 @@ const ItemList = () => {
 		setSearch('')
 	}
 
+	const handleResetOrder = async () => {
+		await resetOrder()
+		await fetchItems(true)
+	}
+
 	return (
 		<div className='flex flex-col max-w-xl mx-auto mt-8'>
-			<div className='relative mb-4'>
-				<input
-					value={searchInput}
-					onChange={e => setSearchInput(e.target.value)}
-					placeholder='Search items...'
-					className='p-2 border rounded w-full pr-10 transition-all focus:ring-2 focus:ring-blue-400'
-				/>
-				{searchInput && (
-					<button
-						onClick={handleClearSearch}
-						className='absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-black'
-					>
-						✖️
-					</button>
-				)}
+			<div className='flex mb-4 gap-2'>
+				<div className="relative flex-grow">
+					<input
+						value={searchInput}
+						onChange={e => setSearchInput(e.target.value)}
+						placeholder='Search items...'
+						className='p-2 border rounded w-full pr-10 transition-all focus:ring-2 focus:ring-blue-400'
+					/>
+					{searchInput && (
+						<button
+							onClick={handleClearSearch}
+							className='absolute right-2 top-1/2 transform -translate-y-1/2 text-gray-500 hover:text-black'
+						>
+							✖️
+						</button>
+					)}
+				</div>
+
+				<button
+					onClick={handleResetOrder}
+					className='px-2 py-1 bg-blue-500 text-white rounded hover:bg-blue-600 transition-all whitespace-nowrap'
+				>
+					Reset order
+				</button>
 			</div>
 
 			<div

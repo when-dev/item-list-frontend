@@ -18,3 +18,7 @@ export async function postOrder(orderedIds: number[]) {
 export async function postSelect(id: number, selected: boolean) {
   await axios.post(`${BASE_URL}/items/select`, { id, selected }, { withCredentials: true })
 }
+
+export async function resetOrder() {
+  await axios.post(`${BASE_URL}/items/reset-order`, {}, { withCredentials: true })
+}
