@@ -23,7 +23,11 @@ const ItemList = () => {
 	const typingTimeout = useRef<NodeJS.Timeout | null>(null)
 
 	useEffect(() => {
-		fetchItems(true)
+		if (!searchInput) {
+			setSearch('').then(() => fetchItems(true))
+		} else {
+			fetchItems(true)
+		}
 		// eslint-disable-next-line react-hooks/exhaustive-deps
 	}, [])
 
@@ -66,7 +70,7 @@ const ItemList = () => {
 
 	const handleClearSearch = () => {
 		setSearchInput('')
-		setSearch('')
+		setSearch('').then(() => fetchItems(true))
 	}
 
 	const handleResetOrder = async () => {
@@ -77,7 +81,7 @@ const ItemList = () => {
 	return (
 		<div className='flex flex-col max-w-xl mx-auto mt-8'>
 			<div className='flex mb-4 gap-2'>
-				<div className="relative flex-grow">
+				<div className='relative flex-grow'>
 					<input
 						value={searchInput}
 						onChange={e => setSearchInput(e.target.value)}
