@@ -11,8 +11,8 @@ export async function fetchItems(search: string, offset: number) {
   return response.data
 }
 
-export async function postOrder(orderedIds: number[]) {
-  await axios.post(`${BASE_URL}/items/order`, { orderedIds }, { withCredentials: true })
+export async function postOrder(orderedIds: number[], insertAfterId: number) {
+  await axios.post(`${BASE_URL}/items/order`, { orderedIds, insertAfterId }, { withCredentials: true })
 }
 
 export async function postSelect(id: number, selected: boolean) {
